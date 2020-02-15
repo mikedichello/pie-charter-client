@@ -46,7 +46,7 @@ class Index extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch('http://localhost:3000/meals', {
+        fetch('http://https://pie-charter-api.herokuapp.com/meals', {
             body: JSON.stringify({ 
                 name: this.state.formInputs.name,
                 description: this.state.formInputs.description,
@@ -82,7 +82,7 @@ class Index extends Component {
     };
 
     deleteMeal(id, index) {
-        fetch(`http://localhost:3000/meals/${id}`, {
+        fetch(`http://https://pie-charter-api.herokuapp.com/meals/${id}`, {
             method: 'DELETE'
         }).then((data) => {
             this.setState({
