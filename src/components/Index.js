@@ -29,7 +29,7 @@ class Index extends Component {
     }
 
     getMeals () {
-        fetch('http://localhost:3000/meals')
+        fetch('https://pie-charter-api.herokuapp.com/meals')
             .then(res =>res.json())
             .then(jsonedMeals => this.setState({meals: jsonedMeals}))
             .catch(err => console.log(err))
