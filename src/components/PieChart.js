@@ -16,23 +16,23 @@ class PieChart extends Component {
                 protein_g: '',
             }
         }
-
     }
 
     componentDidMount() {
-
         this.getData();
+    }  
 
+    componentDidUpdate(){
+        this.getData();
     }
-
 
     getData() {
         const chartData = this.prepareData(this.props.meal);
         this.createChart(chartData);
+
     }
 
     prepareData = (meal) => {
-
         const chartData = {
             labels: ["Carbs (g)", "Fat (g)", "Protein (g)"],
             datasets: [
@@ -48,45 +48,45 @@ class PieChart extends Component {
                         'rgb(255,228,0,1)',
                         'rgb(255,101,47, 1)'
                     ],
-                    borderWidth: 5
-                }
+                    borderWidth: 2
+                }                                
             ]
         }
-
+        
         chartData.datasets[0].data.push(meal.carbs_g)
         chartData.datasets[0].data.push(meal.fat_g)
-        chartData.datasets[0].data.push(meal.protein_g)
+        chartData.datasets[0].data.push(meal.protein_g)  
         return chartData
     }
 
     createChart = (data) => {
-
-        const ctx = document.querySelector(`#${this.props.meal.name}`);
+        const ctx = document.querySelector('#meals');
+        
         let mealsChart = new Chart(ctx, {
             type: 'pie',
             data: data,
             options: {
+                
                 animation: {
                     animateScale: true,
-                    duration: 1000
+                    
+                    duration: 10000
                 },
                 legend: {
                     labels: {
-                        fontColor: 'white'
+                        fontColor: 'white'                        
                     }
                 }
-            }
-
+            }            
         })
     }
 
-
-
-
-    render() {
+    render () {
         return (
             <>
-                <canvas id={`${this.props.meal.name}`} width="300" height="100"></canvas>
+            
+                <canvas id="meals" width="300" height="100"></canvas>
+
             </>
         )
     }
