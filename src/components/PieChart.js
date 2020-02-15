@@ -70,7 +70,7 @@ class PieChart extends Component {
                 animation: {
                     animateScale: true,
                     
-                    duration: 10000
+                    duration: 2000
                 },
                 legend: {
                     labels: {
