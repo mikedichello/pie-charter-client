@@ -14,22 +14,59 @@ class PieChart extends Component {
                 carbs_g: '',
                 fat_g: '',
                 protein_g: '',
-            }
+            },
+            mealsChart: null,
         }
     }
 
     componentDidMount() {
-        this.getData();
+        this.createChart();
     }  
 
     componentDidUpdate(){
-        this.getData();
+        this.updateChart();
     }
 
-    getData() {
-        const chartData = this.prepareData(this.props.meal);
-        this.createChart(chartData);
+    createChart = () => {
+        // create a query selector for the canvas
+        const ctx = document.querySelector('#meals');
+        
+        // Create a new chart with empty data
+        const mealsChart = new Chart(ctx, {
+            type: 'pie',
+            data: {},
+            options: {                
+                animation: {
+                    animateScale: true,                    
+                    duration: 2000
+                },
+                legend: {
+                    labels: {
+                        fontColor: 'white'                        
+                    }
+                }
+            }            
+        });
 
+        // Store this chart object in state
+        this.setState({mealsChart})
+    }
+
+    updateChart() {
+        // Get chart data for specific meal prop
+        const chartData = this.prepareData(this.props.meal);
+        // pull chart object out of current state
+        const { mealsChart } = this.state;
+
+        // Replace current data with updated data.
+        // NOTE: this goes against their documentation
+        // Their recommendation is to remove all elements from the array with .pop()
+        // Then add the new elements with .push()
+        // TODO: update this to not reassign data
+        mealsChart.data = chartData;
+
+        // Call update on the chart object triggering a re-render
+        mealsChart.update();
     }
 
     prepareData = (meal) => {
@@ -57,28 +94,6 @@ class PieChart extends Component {
         chartData.datasets[0].data.push(meal.fat_g)
         chartData.datasets[0].data.push(meal.protein_g)  
         return chartData
-    }
-
-    createChart = (data) => {
-        const ctx = document.querySelector('#meals');
-        
-        let mealsChart = new Chart(ctx, {
-            type: 'pie',
-            data: data,
-            options: {
-                
-                animation: {
-                    animateScale: true,
-                    
-                    duration: 2000
-                },
-                legend: {
-                    labels: {
-                        fontColor: 'white'                        
-                    }
-                }
-            }            
-        })
     }
 
     render () {
