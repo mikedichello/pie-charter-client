@@ -41,7 +41,10 @@ class Index extends Component {
       }
 
     changeFocus(meal) {
-        this.setState({chosenMeal: meal})
+        if(this.state.chosenMeal !== meal) {
+            // If the current meal is not equal to the new selection update the state and cause a re-render
+            this.setState({chosenMeal: meal});
+        }
     }
 
     handleSubmit(event) {
